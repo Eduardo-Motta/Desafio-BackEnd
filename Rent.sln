@@ -1,0 +1,33 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.10.35027.167
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{F8B9E311-5B16-433F-B75E-D742C1B287D4}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Apis", "Apis", "{BC87118C-A3B7-424D-A8F0-E30C9B99A37D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RentApi", "src\Apis\RentApi\RentApi.csproj", "{BE94B85D-B6FC-4927-A508-C6DF1CA712C3}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BE94B85D-B6FC-4927-A508-C6DF1CA712C3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BE94B85D-B6FC-4927-A508-C6DF1CA712C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BE94B85D-B6FC-4927-A508-C6DF1CA712C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BE94B85D-B6FC-4927-A508-C6DF1CA712C3}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{BC87118C-A3B7-424D-A8F0-E30C9B99A37D} = {F8B9E311-5B16-433F-B75E-D742C1B287D4}
+		{BE94B85D-B6FC-4927-A508-C6DF1CA712C3} = {BC87118C-A3B7-424D-A8F0-E30C9B99A37D}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {4639B14B-0664-42CC-889B-E9BC0EA94986}
+	EndGlobalSection
+EndGlobal
