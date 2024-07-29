@@ -2,7 +2,7 @@
 {
     public class ErrorMessage
     {
-        public ErrorMessage(string message, string property, string? attemptedValue = null)
+        public ErrorMessage(string property, string message, string? attemptedValue = null)
         {
             Message = message;
             Property = property;

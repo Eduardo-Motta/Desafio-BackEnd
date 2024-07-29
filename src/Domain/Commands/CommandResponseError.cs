@@ -1,21 +1,16 @@
-﻿using FluentValidation.Results;
-using Shared.Commands;
+﻿using Shared.Commands;
 
 namespace Domain.Commands
 {
     public class CommandResponseError : ICommandResult
     {
-        public CommandResponseError(IEnumerable<ValidationFailure> failures)
+        public CommandResponseError(string message)
         {
-            Errors = failures.Select(x =>
-                new ErrorMessage(
-                    x.PropertyName,
-                    x.ErrorMessage,
-                    x.AttemptedValue?.ToString()));
-            Success = true;
+            Message = message;
+            Success = false;
         }
 
-        public IEnumerable<ErrorMessage> Errors { get; }
+        public string Message { get; }
         public bool Success { get; }
     }
 }
