@@ -2,7 +2,7 @@
 using Domain.Commands.Courier;
 using Domain.Commands.Courier.Validations;
 using Domain.Entities;
-using Domain.Services.Courier;
+using Domain.Services.Contracts;
 using Shared.Commands;
 using Shared.Handlers;
 
@@ -10,9 +10,9 @@ namespace Domain.Handlers.Courier
 {
     public sealed class CreateCourierHandle : IHandler<CreateCourierCommand>
     {
-        private readonly CreateCourierService _createCourierService;
+        private readonly ICreateCourierService _createCourierService;
 
-        CreateCourierHandle(CreateCourierService createCourierService)
+        public CreateCourierHandle(ICreateCourierService createCourierService)
         {
             _createCourierService = createCourierService;
         }
