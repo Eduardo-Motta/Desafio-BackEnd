@@ -4,6 +4,7 @@ using Domain.Entities;
 using Domain.Enums;
 using Domain.Handlers.Courier;
 using Domain.Services.Contracts;
+using Microsoft.Extensions.Logging;
 using Moq;
 using Shared.Utils;
 
@@ -12,6 +13,7 @@ namespace UnitTests.Domain.Handlers
     public class CreateCourierHandleTest
     {
         private readonly Mock<ICreateCourierService> _createCourierService;
+        private readonly Mock<ILogger<CreateCourierHandle>> _logger;
 
         const string VALID_CNPJ = "21750364000169";
         const string VALID_DRIVING_LICENSE = "68306947660";
@@ -19,6 +21,7 @@ namespace UnitTests.Domain.Handlers
         public CreateCourierHandleTest()
         {
             _createCourierService = new Mock<ICreateCourierService>();
+            _logger = new Mock<ILogger<CreateCourierHandle>>();
         }
 
         [Fact]
@@ -34,7 +37,7 @@ namespace UnitTests.Domain.Handlers
                 DrivingLicenseCategory = EDrivingLicenseCategory.A,
             };
 
-            var handle = new CreateCourierHandle(_createCourierService.Object);
+            var handle = new CreateCourierHandle(_createCourierService.Object, _logger.Object);
 
             var result = await handle.Handle(command, cancellationToken);
 
@@ -70,7 +73,7 @@ namespace UnitTests.Domain.Handlers
                 .Setup(service => service.CreateCourier(It.IsAny<CourierEntity>(), cancellationToken))
                 .ReturnsAsync(Either<Error, Guid>.LeftValue(new Error("Cnpj is already in use")));
 
-            var handle = new CreateCourierHandle(_createCourierService.Object);
+            var handle = new CreateCourierHandle(_createCourierService.Object, _logger.Object);
 
             var result = await handle.Handle(command, cancellationToken);
 
@@ -102,7 +105,7 @@ namespace UnitTests.Domain.Handlers
                 .Callback<CourierEntity, CancellationToken>((courier, token) => capturedCourierEntity = courier)
                 .ReturnsAsync((CourierEntity courier, CancellationToken token) => Either<Error, Guid>.RightValue(courier.Id));
 
-            var handle = new CreateCourierHandle(_createCourierService.Object);
+            var handle = new CreateCourierHandle(_createCourierService.Object, _logger.Object);
 
             var result = await handle.Handle(command, cancellationToken);
 
