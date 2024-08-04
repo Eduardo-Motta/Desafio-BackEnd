@@ -18,5 +18,12 @@ namespace Domain.Entities
         public DateTime BirthDate { get; private set; }
         public string DrivingLicense { get; private set; }
         public EDrivingLicenseCategory DrivingLicenseCategory { get; private set; }
+        public string DrivingLicensePath { get; private set; } = string.Empty;
+
+        public void SetDrivingLicensePath(string drivingLicensePath)
+        {
+            DrivingLicensePath = drivingLicensePath;
+            UpdatedAt = DateTime.Now;
+        }
     }
 }
