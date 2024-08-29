@@ -27,7 +27,7 @@
 ## Api:
 
 ```shell
-https://localhost:7243/swagger/index.html
+http://localhost:8080/swagger/index.html
 ```
 
 *No swagger esta documentado cada endpoint*<br>
@@ -36,7 +36,7 @@ https://localhost:7243/swagger/index.html
 ## RabbitMQ
 
 ```shell
-http://localhost:15672/#/
+http://localhost:15672/
 ```
 
 Foram mantidas as credenciais padrão<br>
