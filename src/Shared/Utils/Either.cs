@@ -11,7 +11,7 @@
         public static Either<L, R> LeftValue(L value) => new LeftImplementation(value);
         public static Either<L, R> RightValue(R value) => new RightImplementation(value);
 
-        private class LeftImplementation : Either<L, R>
+        private sealed class LeftImplementation : Either<L, R>
         {
             private readonly L _value;
 
@@ -26,7 +26,7 @@
             public override R Right => throw new InvalidOperationException("Cannot access Right value of a Left Either.");
         }
 
-        private class RightImplementation : Either<L, R>
+        private sealed class RightImplementation : Either<L, R>
         {
             private readonly R _value;
 
