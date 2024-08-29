@@ -64,6 +64,14 @@ Courier:<br>
 Login: 12345678000195<br>
 Senha:12345678<br>
 
+OBSERVAÇÕES:
+* Os valores de CNPJ e CNH devem ser somemente número
+* As placas de moto devem ser no formato XXX0000 OU XXX0X00
+
+SUGESTÕES:
+* Gerador de CNPJ: https://geradornv.com.br/gerador-cnpj/
+* Gerado de CNH: https://geradornv.com.br/gerador-cnh/
+
 # Desafio backend Mottu.
 Seja muito bem-vindo ao desafio backend da Mottu, obrigado pelo interesse em fazer parte do nosso time e ajudar a melhorar a vida de milhares de pessoas.
 
