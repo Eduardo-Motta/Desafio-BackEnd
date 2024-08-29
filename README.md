@@ -1,3 +1,69 @@
+
+# Tecnologias utilizadas
+
+* .NET Core 6.0
+* Entity Framework
+* FluentValidation
+* RabbitMQ
+* xUnit
+* Logger
+* Docker
+* Docker Compose
+* PostgreSQL
+* Swagger
+
+# Execução do projeto
+1. **Acessar o arquivo appsettings.json e configurar o SupabaseStorage conforme dados encaminhados ao recrutador**
+    ```shell
+    src/Apis/RentApi/appsettings.json
+    ```
+    
+1. **Executando o docker-compose todos os scripts e containers necessários serão configurados**:
+    No terminal, execute o comando:
+    ```shell
+    docker-compose up --build
+    ```
+
+## Api:
+
+```shell
+https://localhost:7243/swagger/index.html
+```
+
+*No swagger esta documentado cada endpoint*<br>
+*A documentação especifica a role para cada endpoint*<br>
+
+## RabbitMQ
+
+```shell
+http://localhost:15672/#/
+```
+
+Foram mantidas as credenciais padrão<br>
+
+Login: guest<br>
+Senha: guest<br>
+
+## Banco
+
+Acesso ao banco de dados
+
+```shell
+docker exec -it rent-postgres psql -U postgres
+```
+
+# Validação
+
+Para validação do projeto foram gerados dois usuários iniciais:
+
+Admin:<br>
+Login: 81216414000154<br>
+Senha: 12345678<br>
+
+Courier:<br>
+Login: 12345678000195<br>
+Senha:12345678<br>
+
 # Desafio backend Mottu.
 Seja muito bem-vindo ao desafio backend da Mottu, obrigado pelo interesse em fazer parte do nosso time e ajudar a melhorar a vida de milhares de pessoas.
 
