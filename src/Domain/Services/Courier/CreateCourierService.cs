@@ -9,14 +9,17 @@ namespace Domain.Services.Courier
     public class CreateCourierService : ICreateCourierService
     {
         private readonly ICourierRespository _courierRespository;
+        private readonly IUserRepository _userRepository;
         private readonly ILogger _logger;
-        public CreateCourierService(ICourierRespository courierRespository, ILogger<CreateCourierService> logger)
+
+        public CreateCourierService(ICourierRespository courierRespository, IUserRepository userRepository, ILogger<CreateCourierService> logger)
         {
             _courierRespository = courierRespository;
+            _userRepository = userRepository;
             _logger = logger;
         }
 
-        public async Task<Either<Error, Guid>> CreateCourier(CourierEntity courier, CancellationToken cancellationToken)
+        public async Task<Either<Error, Guid>> CreateCourier(CourierEntity courier, UserEntity user, CancellationToken cancellationToken)
         {
             try
             {
@@ -26,7 +29,7 @@ namespace Domain.Services.Courier
 
                 if (courierByCnpj is not null)
                 {
-                    _logger.LogInformation("A courier with this CNPJ already exists: {Cnpj}", courier.Cnpj);
+                    _logger.LogWarning("A courier with this CNPJ already exists: {Cnpj}", courier.Cnpj);
                     return Either<Error, Guid>.LeftValue(new Error("Cnpj is already in use"));
                 }
 
@@ -34,12 +37,17 @@ namespace Domain.Services.Courier
 
                 if (courierByDrivingLicense is not null)
                 {
-                    _logger.LogInformation("A courier with driving license already exists: {DrivingLicense}", courier.DrivingLicense);
+                    _logger.LogWarning("A courier with driving license already exists: {DrivingLicense}", courier.DrivingLicense);
                     return Either<Error, Guid>.LeftValue(new Error("Driving License is already in use"));
                 }
 
                 await _courierRespository.CreateCourier(courier, cancellationToken);
+
                 _logger.LogInformation("Courier created sucessfullly with CNPJ: {Cnpj}", courier.Cnpj);
+
+                await _userRepository.CreateUser(user, cancellationToken);
+
+                _logger.LogInformation("User created sucessfullly to courier with CNPJ: {Cnpj}", courier.Cnpj);
 
                 return Either<Error, Guid>.RightValue(courier.Id);
             }

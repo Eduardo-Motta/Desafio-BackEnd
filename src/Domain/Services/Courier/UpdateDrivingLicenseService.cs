@@ -11,7 +11,7 @@ namespace Domain.Services.Courier
         private readonly ILogger _logger;
         private readonly IStorageRepository _storageRepository;
 
-        public UpdateDrivingLicenseService(ICourierRespository courierRespository, IStorageRepository storageRepository, ILogger<CreateCourierService> logger)
+        public UpdateDrivingLicenseService(ICourierRespository courierRespository, IStorageRepository storageRepository, ILogger<UpdateDrivingLicenseService> logger)
         {
             _courierRespository = courierRespository;
             _storageRepository = storageRepository;
@@ -22,23 +22,26 @@ namespace Domain.Services.Courier
         {
             try
             {
-                _logger.LogInformation("Started Saving image: {fileName}", fileName);
+                _logger.LogInformation("Started Saving image: {FileName}", fileName);
 
                 var courier = await _courierRespository.FindCourierByCnpj(cnpj, cancellationToken);
 
                 if (courier is null)
                 {
-                    _logger.LogInformation("No courier with this CNPJ not found: {Cnpj}", cnpj);
+                    _logger.LogWarning("No courier with this CNPJ not found: {Cnpj}", cnpj);
                     return Either<Error, string>.LeftValue(new Error("Cnpj not found"));
                 }
                 
-                _logger.LogInformation("Uploading driving license image to bucket: {fileName}", fileName);
-                var result = await _storageRepository.UploadDrivingLicenseAsync(stream, fileName, cancellationToken);
+                _logger.LogInformation("Uploading driving license image to bucket: {FileName}", fileName);
+
+                var url = await _storageRepository.UploadDrivingLicenseAsync(stream, fileName, cancellationToken);
 
                 _logger.LogInformation("Updating courier entity");
+
+                courier.SetDrivingLicensePath(url);
                 await _courierRespository.UpdateCourier(courier, cancellationToken);
 
-                return result;
+                return Either<Error, string>.RightValue(url);
             }
             catch (Exception ex)
             {
