@@ -12,11 +12,13 @@ namespace UnitTests.Domain.Services
     {
         private readonly Mock<ILogger<CreateCourierService>> _loggerMock;
         private readonly Mock<ICourierRespository> _courierRepositoryMock;
+        private readonly Mock<IUserRepository> _userRepositoryMock;
 
         public CreateCourierServiceTest()
         {
             _loggerMock = new Mock<ILogger<CreateCourierService>>();
             _courierRepositoryMock = new Mock<ICourierRespository>();
+            _userRepositoryMock = new Mock<IUserRepository>();
         }
 
         [Fact]
@@ -39,9 +41,13 @@ namespace UnitTests.Domain.Services
            .Setup(repo => repo.CreateCourier(courierToCreate, cancellationToken))
            .Returns(Task.CompletedTask);
 
-            var service = new CreateCourierService(_courierRepositoryMock.Object, _loggerMock.Object);
+            _userRepositoryMock
+           .Setup(repo => repo.CreateUser(It.IsAny<UserEntity>(), cancellationToken))
+           .Returns(Task.CompletedTask);
 
-            var result = await service.CreateCourier(courierToCreate, cancellationToken);
+            var service = new CreateCourierService(_courierRepositoryMock.Object, _userRepositoryMock.Object, _loggerMock.Object);
+
+            var result = await service.CreateCourier(courierToCreate, null, cancellationToken);
 
             Assert.True(result.IsRight);
             Assert.IsType<Guid>(result.Right);
@@ -64,10 +70,14 @@ namespace UnitTests.Domain.Services
             .Setup(repo => repo.FindCourierByDrivingLicense(drivingLicense, cancellationToken))
             .ReturnsAsync((CourierEntity)null!);
 
+            _userRepositoryMock
+           .Setup(repo => repo.CreateUser(It.IsAny<UserEntity>(), cancellationToken))
+           .Returns(Task.CompletedTask);
 
-            var service = new CreateCourierService(_courierRepositoryMock.Object, _loggerMock.Object);
 
-            var result = await service.CreateCourier(expectedCourierByCnpj, cancellationToken);
+            var service = new CreateCourierService(_courierRepositoryMock.Object, _userRepositoryMock.Object, _loggerMock.Object);
+
+            var result = await service.CreateCourier(expectedCourierByCnpj, null, cancellationToken);
 
             Assert.True(result.IsLeft);
             Assert.IsType<Error>(result.Left);
@@ -90,9 +100,13 @@ namespace UnitTests.Domain.Services
             .Setup(repo => repo.FindCourierByDrivingLicense(drivingLicense, cancellationToken))
             .ReturnsAsync(expectedCourierByDrivingLicense);
 
-            var service = new CreateCourierService(_courierRepositoryMock.Object, _loggerMock.Object);
+            _userRepositoryMock
+           .Setup(repo => repo.CreateUser(It.IsAny<UserEntity>(), cancellationToken))
+           .Returns(Task.CompletedTask);
 
-            var result = await service.CreateCourier(expectedCourierByDrivingLicense, cancellationToken);
+            var service = new CreateCourierService(_courierRepositoryMock.Object, _userRepositoryMock.Object, _loggerMock.Object);
+
+            var result = await service.CreateCourier(expectedCourierByDrivingLicense, null, cancellationToken);
 
             Assert.True(result.IsLeft);
             Assert.IsType<Error>(result.Left);
@@ -115,9 +129,13 @@ namespace UnitTests.Domain.Services
             .Setup(repo => repo.FindCourierByDrivingLicense(drivingLicense, cancellationToken))
             .ReturnsAsync((CourierEntity)null!);
 
-            var service = new CreateCourierService(_courierRepositoryMock.Object, _loggerMock.Object);
+            _userRepositoryMock
+           .Setup(repo => repo.CreateUser(It.IsAny<UserEntity>(), cancellationToken))
+           .Returns(Task.CompletedTask);
 
-            var result = await service.CreateCourier(expectedCourierByDrivingLicense, cancellationToken);
+            var service = new CreateCourierService(_courierRepositoryMock.Object, _userRepositoryMock.Object, _loggerMock.Object);
+
+            var result = await service.CreateCourier(expectedCourierByDrivingLicense, null, cancellationToken);
 
             Assert.True(result.IsLeft);
             Assert.IsType<Error>(result.Left);
