@@ -11,7 +11,7 @@ namespace Infrastructure.Messaging.RabbitMQ
 
         public RabbitMQEventPublisher()
         {
-            var factory = new ConnectionFactory() { HostName = "localhost" };
+            var factory = new ConnectionFactory() { HostName = "rabbitmq" };
             _channel = factory.CreateConnection().CreateModel();
         }
 
